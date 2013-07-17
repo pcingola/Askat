@@ -1,0 +1,83 @@
+####################################################################################
+#                         Description of ASKAT MAIN function                       #
+####################################################################################
+ASKAT{ASKAT}
+Description: ASKAT tests for association between rare or common single-SNP or region-based SNPs and continuous phenotype controlling for family relatedness and population structure using the kernel machine
+Usage : ASKAT(Ped, kin1, Missing)
+Arguments :
+Ped: Pedigree data file, it has subject IDs as first column (IDs should be different for all subjects), phenotype as second column and region-based SNPs that will be analyzed together
+kin1 : Kinship matrix, if the kinship matrix noted is calculated from GenABEL we should convert it to the kinship matrix using this command: kin1 = diagReplace(kin1, upper=TRUE)
+Missing : Logical parameter, if TRUE, it means that there is missing data in the Pedigree data file: ASKAT function moves out subjects with missing data
+
+Depends:
+ASKAT depends on : library(nFactors)
+ASKAT depends on : library(CompQuadForm)
+ASKAT depends on : fsatlmm program
+
+####################################################################################
+#                 SCRIPT for RUNNING AN EXAMPLE of ASKAT IN R                      #
+####################################################################################
+library(nFactors)
+library(CompQuadForm)
+
+path = "your pathway to the R files below"
+source(file = paste(path, "/ASKAT.R", sep=""))
+source(file = paste(path, "/Geno.FaST.LMM.R", sep=""))
+source(file = paste(path, "/Get_Lambda.R", sep=""))
+source(file = paste(path, "/Get_PValue.Modif.R", sep=""))
+source(file = paste(path, "/pheno.geno.kin.Without.NA.R", sep=""))
+source(file = paste(path, "/VC.FaST.LMM.R", sep=""))
+
+load(paste(path, "/kin1.Rdata", sep=""))
+Ped = read.table(file = paste(path, "/Ped_EX_ASKAT_NOMissdata.dat", sep=""), header=FALSE)
+Missing = FALSE
+ASKAT(Ped, kin1, Missing)
+
+#------------------------------------------------------------------------------
+# Test: geno_test
+#------------------------------------------------------------------------------
+
+# Original R version
+	pvalue.ASKAT :  0.332863
+	Q.ASKAT      :  987.0919
+	Polygenic.VC :  1.310425
+	Env.VC       :  1.116682
+	lambda       :  1052.643
+
+# Java wrapper
+	p-value      :	0.3166592	
+	Q            :	2461.539	
+	Polygenic.VC :	0.0002783752	
+	Env.VC       :	2.435393	
+	lambda       :	2454.922	
+
+#------------------------------------------------------------------------------
+# Test: geno_cov
+#------------------------------------------------------------------------------
+
+# Original R version: Differences
+	pvalue       :  0.6586991
+	Q.ASKAT      :  8040.632
+	Polygenic.VC :  0.000104413
+	Env.VC       :  2.299849
+	lambda       :  28919.56	482.10587	442.32051	384.66029	318.98949	290.49221	122.14077	87.51620	65.81446	57.12626	40.80909
+
+# Java wrapper
+	p-value      :	0.3340863	
+	Q            :	25191.44	
+	Polygenic.VC :	0.001026282	
+	Env.VC       :	2.433403	
+	lambda       :	24508.56	481.4885	441.8991	384.5358	318.7743	290.2661	122.1321	87.50353	65.80886	57.12162	40.80717	
+
+Files:
+	geno_cov.tfam			: Checked
+	geno_cov.tped			: Checked
+	gen0tped.raw			: Checked		geno_cov.block.1_0.genabel.gen
+	GenableTrait.dat		: Differs!		geno_cov.block.1_0.genabel.phen
+	
+# Original R version after replacing 'trait' data in GenableTrait (using geno_cov.tfam column): Perfect match
+	pvalue.ASKAT :  0.3340863
+	Q.ASKAT      :  25191.44
+	Polygenic.VC :  0.001026282
+	Env.VC       :  2.433403
+	lambda       :  24508.55588   481.48853   441.89906   384.53577   318.77435   290.26615    122.13207    87.50353    65.80886    57.12162    40.80717

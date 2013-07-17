@@ -1,0 +1,107 @@
+
+Note: These old version of fastlmm do not work any more
+
+fastlmm 1.02
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06	
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456
+
+fastlmm 1.03
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456	
+
+fastlmm 1.04
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456
+
+fastlmm 1.05
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	0.003013399
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	0.0006827345
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.8924126
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.6047981
+
+
+fastlmm 1.06
+------------
+
+--------------------------------------------------------------------------------
+
+fastlmm 1.07
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06	
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07	
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456	
+
+
+fastlmm 1.08
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06	
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07	
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456	
+
+
+fastlmm 1.09
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.385062e-06	
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.021065e-07	
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7341181	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1422456	
+
+
+fastlmm 2.03
+------------
+
+		1:100 - 1:1000		Id:	snp_1 - snp_10		p-value:	2.421177e-06	
+		1:200100 - 1:201000	Id:	snp_2001 - snp_2010	p-value:	1.061077e-07	
+		1:1100 - 1:2000		Id:	snp_11 - snp_20		p-value:	0.7351997	
+		1:201100 - 1:202000	Id:	snp_2011 - snp_2020	p-value:	0.1424972	
+
+--------------------------------------------------------------------------------
+
+fastlmm 2.03: 'Permission denied' problem:
+		-tfile parameter now does not accept any '/' character (looks like a bug)
+		Solved by using '-tfile karim4k.block.1_100.2_geno_test' 
+			instead of  '-tfile karim4k.block.1_100.2/geno_test'
+			(changed '/' by '_')
+
+--------------------------------------------------------------------------------
+
+kin.FaST.data.miss.txt:	Are they always the same? 
+	kin.FaST.data.miss.txt:	Are they always the same? 
+	Can we avoid wasting time on re-creating the same matrix?
+
+	$ md5sum karim4k.block.1_100.*/kin.FaST.data.miss.txt
+	f228502281bd291eb291d018a947b6b9  karim4k.block.1_100.1/kin.FaST.data.miss.txt
+	f228502281bd291eb291d018a947b6b9  karim4k.block.1_100.2/kin.FaST.data.miss.txt
+
+--------------------------------------------------------------------------------
+pheno.txt Can we save time by not writing the same data?
+
+	$ md5sum karim4k.block.1_100.*/pheno.txt
+	f4c37a7a296de419a1685aab95a3a265  karim4k.block.1_100.1/pheno.txt
+	f4c37a7a296de419a1685aab95a3a265  karim4k.block.1_100.2/pheno.txt
+
+--------------------------------------------------------------------------------
+TFAM file is produced the same way as 'pheno.txt' (but it has three extra zero columns)
+	May be we can skip writing that file too
+
+--------------------------------------------------------------------------------
+

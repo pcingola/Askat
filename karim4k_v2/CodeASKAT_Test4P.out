@@ -1,0 +1,5907 @@
+
+R version 2.15.0 (2012-03-30)
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(CompQuadForm)
+> library(nFactors)
+Loading required package: MASS
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object(s) are masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object(s) are masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object(s) are masked from ‘package:lattice’:
+
+    parallel
+
+> 
+> ###############################
+> path1 = '.';
+> 
+> source(file = paste(path1, "/ASKAT.R", sep=""))
+> source(file = paste(path1, "/Geno.FaST.LMM.R", sep=""))
+> source(file = paste(path1, "/Get_Lambda.R", sep=""))
+> source(file = paste(path1, "/Get_PValue.Modif.R", sep=""))
+> source(file = paste(path1, "/pheno.geno.kin.Without.NA.R", sep=""))
+> source(file = paste(path1, "/VC.FaST.LMM.R", sep=""))
+> 
+> load(paste(path1, "/kinsip4000SNPs.RData", sep=""))
+> 
+> Ped.pheno.Geno = read.table(paste(path1, "/Ped4ASKAT.dat", sep=""), header=FALSE)
+> Y.trait = Ped.pheno.Geno[,2]
+> Missing = FALSE
+> GenoAll = Ped.pheno.Geno[,3:dim(Ped.pheno.Geno)[2]]
+> 
+> IDs = c(1:length(Y.trait))
+> wp1 = seq(0, dim(GenoAll)[2], by = 10)
+> 
+> p.value.ASKAT = vector(length = (length(wp1)-1))
+> 
+> for (i in 1:(length(wp1)-1)){
++ 
++ Ped = cbind(IDs, Y.trait, GenoAll[,(wp1[i]+1):wp1[i+1]])
++ resultats = ASKAT(Ped, kin1, Missing)
++ p.value.ASKAT[i] = resultats$pvalue.ASKAT
++ print(c(i, p.value.ASKAT[i]))
++ }
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 1.000000e+00 2.385062e-06
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 2.0000000 0.7341183
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 3.00000000 0.06539001
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 4.0000000 0.6968539
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 5.0000000 0.7452268
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 6.0000000 0.3305988
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 7.00000000 0.09546572
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 8.0000000 0.8074021
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 9.0000000 0.7504513
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 10.0000000  0.1057579
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 11.0000000  0.1223856
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 12.0000000  0.4958792
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 13.0000000  0.6601654
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 14.0000000  0.7927935
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 15.0000000  0.9615828
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 16.0000000  0.9911741
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 17.0000000  0.8295203
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 18.0000000  0.4897277
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 19.0000000  0.2466025
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 20.0000000  0.5185782
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 21.0000  0.6312
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 22.0000000  0.6241475
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 23.0000000  0.3151078
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 24.0000000  0.6339729
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 25.0000000  0.1911809
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 26.0000000  0.4434167
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 27.0000000  0.7893197
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 28.0000000  0.9365905
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 29.0000000  0.7219655
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 30.0000000  0.2081531
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 31.0000000  0.6973657
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 32.0000000  0.6110573
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 33.0000000  0.6467949
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 34.000000  0.395963
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 35.0000000  0.6828007
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 36.000000  0.167687
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 37.0000000  0.3982188
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 38.0000000  0.2910559
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 39.000000  0.231394
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 40.000000  0.171464
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 41.0000000  0.6733892
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 42.0000000  0.1855319
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 43.0000000  0.4015093
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 44.0000000  0.6503671
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 45.0000000  0.6673833
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 46.0000000  0.8936045
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 47.0000000  0.3432827
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 48.0000000  0.8459855
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 49.0000000  0.8180898
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 50.0000000  0.4618066
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 51.0000000  0.1546688
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 52.0000000  0.8184204
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 53.0000000  0.3195694
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 54.0000000  0.4877631
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 55.0000000  0.6107248
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 56.0000000  0.3200048
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 57.0000000  0.6971179
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 58.0000000  0.9810535
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 59.0000000  0.4814597
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 60.00000000  0.05117367
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 61.0000000  0.7163548
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 62.00000000  0.08692454
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 63.0000000  0.9920866
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 64.0000000  0.3010546
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 65.0000000  0.3766113
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 66.0000000  0.9010837
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 67.0000000  0.8130228
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 68.0000000  0.6131976
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 69.0000000  0.1804393
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 70.0000000  0.9691157
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 71.0000000  0.9915719
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 72.00000000  0.01286774
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 73.0000000  0.6444453
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 74.0000000  0.2839958
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 75.0000000  0.1599239
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 76.0000000  0.2413356
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 77.0000000  0.8672313
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 78.0000000  0.6493375
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 79.0000000  0.8953444
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 80.0000000  0.9657147
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 81.000000  0.354712
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 82.0000000  0.6049788
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 83.0000000  0.2592781
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 84.0000000  0.4095103
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 85.000000000  0.004195541
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 86.0000000  0.4965078
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 87.0000000  0.7401611
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 88.0000000  0.4416696
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 89.0000000  0.5013447
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 90.0000000  0.6648489
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 91.00000000  0.01395739
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 92.0000000  0.8729431
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 93.0000000  0.2109078
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 94.00000000  0.06507782
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 95.0000000  0.1674014
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 96.0000000  0.4644109
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 97.000000  0.582516
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 98.0000000  0.7874525
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 99.000000  0.873258
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 100.0000000   0.8001259
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 1.010000e+02 7.563936e-07
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 102.00000000   0.04410591
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 103.0000000   0.3363307
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 1.04000e+02 2.28478e-03
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 105.0000000   0.6258055
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 106.0000000   0.4173388
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 107.0000000   0.1419055
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 108.0000000   0.5074513
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 109.000000   0.437251
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 110.0000000   0.5101301
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 111.0000000   0.5875135
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 112.0000000   0.2805787
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 113.000000   0.513574
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 114.0000000   0.5425429
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 115.0000000   0.2847131
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 116.0000000   0.3569172
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 117.0000000   0.7280484
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 118.0000000   0.1016327
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 119.000000   0.177631
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 120.0000000   0.5710014
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 121.0000000   0.7404506
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 122.0000000   0.4330812
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 123.0000000   0.8082989
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 124.0000000   0.9456878
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 125.0000000   0.2148611
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 126.0000000   0.9703854
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 127.000000   0.662498
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 128.000000   0.721041
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 129.0000000   0.4007454
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 130.0000000   0.7208208
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 131.0000000   0.8127768
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 132.000000   0.540587
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 133.000000   0.046903
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 134.0000000   0.0575593
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 135.0000000   0.8230123
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 136.0000000   0.7308231
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 137.0000000   0.1047521
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 138.0000000   0.2043907
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 139.0000000   0.1709839
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 140.0000000   0.2890733
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 141.0000000   0.2417651
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 142.0000000   0.5399549
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 143.0000000   0.2929189
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 144.0000000   0.7746768
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 145.0000000   0.2082332
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 146.0000000   0.6998988
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 147.0000000   0.4411872
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 148.0000000   0.7982009
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 149.0000000   0.6206492
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 150.0000000   0.4100694
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 151.0000000   0.9578557
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 152.0000000   0.9110167
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 153.00000000   0.04715001
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 154.0000000   0.8392653
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 155.0000000   0.3519647
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 156.0000000   0.3690888
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 157.0000000   0.7756455
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 158.0000000   0.5145809
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 159.0000000   0.2839223
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 160.0000000   0.7752323
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 161.0000000   0.2369101
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 162.0000000   0.1969948
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 163.0000000   0.7630354
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 164.000000   0.919607
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 165.0000000   0.6386974
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 166.000000   0.316843
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 167.0000000   0.8449205
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 168.00000000   0.07019376
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 169.0000000   0.1098316
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 170.000000   0.683293
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 171.0000000   0.8707678
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 172.0000000   0.1606844
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 173.0000000   0.2490545
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 174.0000000   0.7889793
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 175.0000000   0.2110138
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 176.0000000   0.8988523
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 177.0000000   0.3196134
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 178.00000000   0.01787118
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 179.0000000   0.8890816
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 180.0000000   0.6025748
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 181.0000000   0.8595247
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 182.0000000   0.3843351
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 183.0000000   0.2159371
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 184.0000000   0.9087357
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 185.0000000   0.7558267
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 186.0000000   0.5212874
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 187.0000000   0.3185206
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 188.0000000   0.9380719
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 189.0000000   0.4114702
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 190.0000000   0.7229369
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 191.0000000   0.2774972
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 192.0000000   0.3138104
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 193.0000000   0.5515799
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 194.0000000   0.8663955
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 195.0000000   0.8024323
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 196.00000000   0.09805856
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 197.0000000   0.7076505
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 198.0000000   0.8399509
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 199.000000   0.484278
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+[1] 200.0000000   0.1342373
+
+
+FastLmmC v1.02.20110927 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Sep 27 2011 at 13:29:07 by BOBD02 using MKL
+
+ -- Process CommandLine arguments:
+
+ -- Loading data --
+  ------ Processing Alt Phenotype: [pheno.txt]
+            Using Phenotype Index:       1
+  -------  Processing PLINK files: [geno_test]
+   Number of Individuals Selected:    1160
+  Number of Phenotypes/Individual:       1
+        Number of SNPs/Individual:       1
+   Number of SNPs/Individual Used:       1
+ -- Computing/loading EigenSym --
+
+computing full rank EigenSym from input Kernel matrix
+Computing the Eigenvectors of the Kernelmatrix...
+done.
+saving EigenSym to directory OURSKAT_FaST
+ -- Computing GWAs using a LMM --
+
+starting fullrank training
+done fullrank training
+ -- Writing output to [geno_test.out.txt] --
+Read 2 items
+
+Execution halted
