@@ -12,7 +12,7 @@ You can taker a look at some <a href="html/AskatWrapper.pdf">slides</a> on the w
 	<li> R : Make sure you have a resonably up to date version of R installed and availabe in you PATH.
 	<li> Java 1.6 : Most modern computers have Java installed.
 	<li> Fast-LMM : Pre-compiled versions of fast-Lmm can be found <a href="http://fastlmm.codeplex.com/"> here </a> (Linux and Windows).<br>
-			<b>WARNING:</b> The latest pre-compiled linux versions had a bug, so we had to use the old version v1.02.
+			<b>WARNING:</b> You should use relatively new version of Fast-LMM (e.g. version v1.09).
 	<li> R Libraries: The ASKAT wrapper will tell you how to to install any missing R libraries.
 </ul>
 
