@@ -1,7 +1,7 @@
 Askat 
 =====
 
-You can <b>download</b> the program <a href="askat.zip"> <b><font size=+1>here</font></b> </a><p>
+You can <b>download</b> the program <a href="http://sourceforge.net/projects/snpeff/files/askat.zip"> <b><font size=+1>here</font></b> </a><p>
 You can taker a look at some <a href="html/AskatWrapper.pdf">slides</a> on the wrapper.
 
 <hr><center><h3>Basics</h3></center>
