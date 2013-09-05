@@ -171,27 +171,44 @@ public class KinshipBlock {
 			// no longer hit, we can assume that it will no be hit again.
 			// So we can save the data for the markers that were NOT hit.
 			for (Marker m : markersNotHit) {
-				// Save file
-				String mid = m.getId().replaceAll("[^a-zA-Z0-9\\-\\.]+", "_");
-				String batchFile = blockName + "." //
-						+ m.getChromosomeName() //
-						+ ":" + (m.getStart() + 1) //
-						+ "-" + (m.getEnd() + 1) //
-						+ "_" + mid //
-						+ ".askat";
-
-				// Get lines
-				List<String> lines = interval2tped.get(m);
-
-				// Save file
-				if (intervalsCreateFile(lines, batchFile, m)) batchFiles.add(batchFile); // Add file and increment number
-
-				// Remove marker
-				interval2tped.remove(m);
+				String batchFile = saveFileMarker(m, interval2tped); // Save file
+				if (batchFile != null) batchFiles.add(batchFile); // Add file and increment number
+				interval2tped.remove(m); // Remove marker (we are done)
 			}
 		}
 
+		// Save all files that have not been saved so far
+		for (Marker m : interval2tped.keySet()) {
+			String batchFile = saveFileMarker(m, interval2tped); // Save file
+			if (batchFile != null) batchFiles.add(batchFile); // Add file and increment number
+			interval2tped.remove(m); // Remove marker (we are done)
+		}
+
 		return batchFiles;
+	}
+
+	/**
+	 * Save all entries that march an interval (marker)
+	 * @param m
+	 * @param interval2tped
+	 * @return
+	 */
+	String saveFileMarker(Marker m, MultivalueHashMap<Marker, String> interval2tped) {
+		// Save file
+		String mid = m.getId().replaceAll("[^a-zA-Z0-9\\-\\.]+", "_");
+		String batchFile = blockName + "." //
+				+ m.getChromosomeName() //
+				+ ":" + (m.getStart() + 1) //
+				+ "-" + (m.getEnd() + 1) //
+				+ "_" + mid //
+				+ ".askat";
+
+		// Get lines
+		List<String> lines = interval2tped.get(m);
+
+		// Save file
+		if (intervalsCreateFile(lines, batchFile, m)) return batchFile;
+		return null;
 	}
 
 	/**
