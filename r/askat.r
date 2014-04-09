@@ -3,7 +3,7 @@
 #
 # By: Karim Oualkacha
 # Modifications by: Pablo Cingolani
-#
+# Optimization to the O(N^3) to O(N^2) complexity: Stepan Grinek
 #
 # 2013-01:
 # --------
@@ -86,26 +86,22 @@ ASKAT <- function(ped, fastlmm) {
 		
 	S = fastlmm$S
 	U = fastlmm$U
-    #print(U[U!=0])
+  
 	##### STEP 3: Calculation of weights matrix W and the matrix K =GWG #####
 	freq.MAF = apply(X, 2, mean)/2
-	#Geno.no.sparse = which(!freq.MAF==0)
-    #X = X[,Geno.no.sparse]
-    #freq.MAF = apply(X, 2, mean)/2
-
-	#Attempt to reduce time to O(N^2), using PCA trick
+	
   
-  	if( length(freq.MAF) == 1){
-    	w <- dbeta(freq.MAF, 1, 25)
-    	K.sqrt <- w * t(X)
-  	} else {
-    	w <- vector(length = length(freq.MAF))
-    	for (i in 1:length(freq.MAF)){
-    	  w[i] <- dbeta(freq.MAF[i], 1, 25)
-    	}
-    	w <- diag(w)
-    	K.sqrt <- w %*% t(X)
-  	}
+  if( length(freq.MAF) == 1){
+  	w <- dbeta(freq.MAF, 1, 25)
+  	K.sqrt <- w * t(X)
+  } else {
+  	w <- vector(length = length(freq.MAF))
+  	for (i in 1:length(freq.MAF)){
+  	  w[i] <- dbeta(freq.MAF[i], 1, 25)
+   	}
+   	w <- diag(w)
+  	K.sqrt <- w %*% t(X)
+  }
 	
 ##### STEP 2: ASKAT score test statistic calculations #####
 
@@ -121,33 +117,13 @@ ASKAT <- function(ped, fastlmm) {
 	Y.tilde <- inv.sqrt.D.0 %*% (UT %*% Y.trait)
 	s2 = estim.sigma.e
 	P.0.tilde = (diag(1, dim(U)[1], dim(U)[2])) - (X.tilde %*% Z) %*% ((t(X.tilde)))
-	#K.tilde2 <- inv.sqrt.D.0 %*% (UT %*% (K %*% (U %*% inv.sqrt.D.0))) 
-	#W1 <- P.0.tilde %*% K.tilde2 %*% P.0.tilde
-	#PDU <- P.0.tilde %*% inv.sqrt.D.0 %*% UT
-	#PDUT <- t(PDU)
-	#W1 <- P.0.tilde %*% inv.sqrt.D.0 %*% UT %*% K %*% U %*% inv.sqrt.D.0 %*% P.0.tilde #55 s
-	RM <- ((K.sqrt %*% U) %*% inv.sqrt.D.0) %*%  P.0.tilde# 44 s
+	RM <- ((K.sqrt %*% U) %*% inv.sqrt.D.0) %*%  P.0.tilde
 	W <- RM %*% t(RM)
-
-	#P.0.tilde is symmetric
-	#res <- P.0.tilde %*% Y.tilde
+	
 	Q <- (t(Y.tilde) %*% t(RM) %*% ((RM %*% Y.tilde)))/(2 * s2)
-	#print("time for Q computation, after associativity update")
-	#print(proc.time()-ptm)
-
-	#print("Q, Q2, Q-Q2"); print(c(Q, Q2, Q-Q2))
-
-
-	#W1 = P.0.tilde %*% K.tilde
-	#W1 = W1 %*% P.0.tilde/2
-	#K.tilde = inv.sqrt.D.0 %*% UT
-
-	#P.0.tilde = (diag(1, dim(U)[1], dim(U)[2])) - (X.tilde %*% Z) %*% ((t(X.tilde)))
-	#W1 = P.0.tilde %*% K.tilde2 %*% P.0.tilde/2#UPD: on average 0.5 s gain
-   
-  	out = Get_PValue.Modif(W/2, Q)
-  	pvalue.davies = out$p.value
-  	lambda = out$lambda
+	out = Get_PValue.Modif(W/2, Q)
+  pvalue.davies = out$p.value
+  lambda = out$lambda
 
 	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = estim.sigma.RG, Env.VC = estim.sigma.e, lambda = lambda) );
 }
@@ -167,33 +143,30 @@ Get_Lambda <- function (K) {
 
 #-------------------------------------------------------------------------------
 # Get p-value
-# Note: This function was taken from SKAT package
+# Note: This function was taken from SKAT package, modified as needed.  
 #-------------------------------------------------------------------------------
 Get_PValue.Modif <- function(K, Q){
 	lambda <- Get_Lambda(K)
-	n1 <- length(Q)
-	p.val <- rep(0, n1)
-	p.val.liu <- rep(0, n1)
-	is_converge <- rep(0, n1)
-	for (i in 1:n1) {
-		out <- davies(Q[i], lambda, acc = 10^(-6))
-		p.val[i] <- out$Qq
-		p.val.liu[i] <- liu(Q[i], lambda)
-		is_converge[i] <- 1
+	p.val<-0
+	p.val.liu<-0
+	is_converge <- 0
+	 
+  out <- davies(Q, lambda, acc = 10^(-6))
+  p.val <- out$Qq
+  p.val.liu <- liu(Q, lambda)
+  is_converge <- 1
+  
+  if (length(lambda) == 1) {
+    p.val <- p.val.liu
+    } else if (out$ifault != 0) {
+      is_converge <- 0
+    }
+  
+  if (p.val > 1 || p.val < 0) {
+    is_converge <- 0
+  }
 
-		if (length(lambda) == 1) {
-			p.val[i] <- p.val.liu[i]
-		} else if (out$ifault != 0) {
-			is_converge[i] <- 0
-		}
-
-		if (p.val[i] > 1 || p.val[i] < 0) {
-			is_converge[i] <- 0
-			p.val[i] <- p.val.liu[i]
-		}
-	}
-
-	return(list(p.value = p.val, p.val.liu = p.val.liu, is_converge = is_converge, lambda = lambda))
+  return(list(p.value = p.val, p.val.liu = p.val.liu, is_converge = is_converge, lambda = lambda))
 }
 
 #-------------------------------------------------------------------------------

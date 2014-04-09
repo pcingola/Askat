@@ -12,7 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import ca.mcgill.mcb.pcingola.Pcingola;
-import ca.mcgill.mcb.pcingola.fileIterator.*;
+import ca.mcgill.mcb.pcingola.fileIterator.BedFileIterator;
+import ca.mcgill.mcb.pcingola.fileIterator.LineFileIterator;
+import ca.mcgill.mcb.pcingola.fileIterator.VcfFileIterator;
 import ca.mcgill.mcb.pcingola.interval.Genome;
 import ca.mcgill.mcb.pcingola.interval.SeqChange;
 import ca.mcgill.mcb.pcingola.osCmd.OsCmdRunner;
@@ -22,6 +24,7 @@ import ca.mcgill.mcb.pcingola.util.Gpr;
 import ca.mcgill.mcb.pcingola.util.Timer;
 import ca.mcgill.mcb.pcingola.vcf.VcfEntry;
 import ca.mcgill.mcb.pcingola.vcf.VcfGenotype;
+
 
 
 
@@ -856,10 +859,10 @@ public class Askat implements CommandLine {
 		return use;
 	}
 
-	//UPD: Override because of inconsistency between old and new version of CommandLine class?? 
+	//UPD: Override for consistency between old and new version of CommandLine class
 	@Override
 	public String[] getArgs() {
-		// TODO remove and replace old parser with the new one?
+		
 		return null;
 	}
 }
