@@ -96,6 +96,7 @@ public class Askat implements CommandLine {
 	protected boolean verbose = false; // Be verbose
 	protected boolean dependencyCheck = true; // Perform a dependency check
 	boolean onlySnp = false; // Only use SNPs in VCF files
+	protected String[] args;
 	protected String genotypeName = "";
 	protected String tpedFile;
 	protected String tfamFile;
@@ -113,14 +114,15 @@ public class Askat implements CommandLine {
 	protected List<SeqChange> intervals;
 
 	public static void main(String[] args) {
-		Askat askat = new Askat();
+		Askat askat = new Askat(args);
 		askat.parseArgs(args);
 		askat.run();
 	}
 
-	public Askat() {
+	public Askat(String[] args) {
 		genome = new Genome();
 		pathToBin = new HashMap<String, String>();
+		this.args = args;
 	}
 
 	void askat(String blockFile, String sub) {
@@ -316,6 +318,11 @@ public class Askat implements CommandLine {
 			}
 		}
 		return fullyQualifiedExecutable == null ? null : fullyQualifiedExecutable.getAbsolutePath();
+	}
+
+	@Override
+	public String[] getArgs() {
+		return args;
 	}
 
 	public Genome getGenome() {
