@@ -134,12 +134,14 @@ ASKAT <- function(ped, fastlmm) {
 Get_Lambda <- function (K) {
 	out.s <- eigen(K, symmetric = TRUE, only.values = TRUE)
 	lambda1 <- out.s$values
-	IDX1 <- which(lambda1 >= 0)
-	IDX2 <- which(lambda1 > mean(lambda1[IDX1])/1e+05)
-	if (length(IDX2) == 0) { fatalError("No Eigenvalue is bigger than 0!!") }
-	lambda <- lambda1[IDX2]
-	return( lambda );
-}
+	print(lambda1)
+  IDX1 <- which(lambda1 >= 0)
+	#IDX2 <- which(lambda1 > mean(lambda1[IDX1])/1e+05)
+	if (length(IDX1) == 0) { fatalError("No Eigenvalue is bigger than 0!!") }
+	lambda <- lambda1[IDX1]
+	print(lambda)
+  return( lambda );
+  }
 
 #-------------------------------------------------------------------------------
 # Get p-value
@@ -151,7 +153,7 @@ Get_PValue.Modif <- function(K, Q){
 	p.val.liu<-0
 	is_converge <- 0
 	 
-  out <- davies(Q, lambda, acc = 10^(-6))
+  out <- davies(Q, lambda, acc = 10^(-9))
   p.val <- out$Qq
   p.val.liu <- liu(Q, lambda)
   is_converge <- 1
@@ -165,7 +167,7 @@ Get_PValue.Modif <- function(K, Q){
   if (p.val > 1 || p.val < 0) {
     is_converge <- 0
   }
-
+  cat("is converge:"); cat(is_converge)
   return(list(p.value = p.val, p.val.liu = p.val.liu, is_converge = is_converge, lambda = lambda))
 }
 

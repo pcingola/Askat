@@ -320,11 +320,7 @@ public class Askat implements CommandLine {
 		return fullyQualifiedExecutable == null ? null : fullyQualifiedExecutable.getAbsolutePath();
 	}
 
-	@Override
-	public String[] getArgs() {
-		return args;
-	}
-
+	
 	public Genome getGenome() {
 		return genome;
 	}
