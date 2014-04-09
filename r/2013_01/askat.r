@@ -4,6 +4,12 @@
 # By: Karim Oualkacha
 # Modifications by: Pablo Cingolani
 #
+#
+# 2013-01:
+# --------
+#
+#	- FaST-LMM code moved to kinship.r
+#
 # Code review:
 # ------------
 #
@@ -60,40 +66,26 @@ library(CompQuadForm)
 #-------------------------------------------------------------------------------
 # ASKAT Main function
 #
-# Ped    : Is the Pedigree data file. It has subject IDs as first column (IDs 
+# ped    : Is the pedigree data file. It has subject IDs as first column (IDs 
 #          should be differents for all subjects), phenotype as second column 
 #          and region-based SNPs that will be analized together  
 #
-# tfam   : This is the TFAM matrix (PLINK's TFAM format file)
-#
-# kin1   : The kinship matrix. If the kinship matrix noted is calculated from 
-#          GenABEL we should convert it to the kinship matrix using this 
-#          command: 
-#              kin1 = diagReplace(kin1, upper=TRUE)
-#
-# Missing: A logical parameter, if TRUE, it means that there is missing values 
-#          in the Pedigree data set: ASKAT function moves out subjects with 
-#          missing data
+# fastlmm: Results form fastlmm program (see kinship.r)
 #
 #-------------------------------------------------------------------------------
-ASKAT <- function(Ped, tfam, kin1, simFileName, phenoFileName, tfamFile ) {
+ASKAT <- function(ped, fastlmm) {
 
-	#####  STEP 1: Check for Missing Data and construction of Pedigree without Missing Data   #####
+	#####  STEP 1: Check for Missing Data and construction of pedigree without Missing Data   #####
 
-	# Directory for eigenvalue output (Fast-LMM)
-	eigenDir <- tmpFile("ASKAT_FaSTLMM");
-
-	#
-	Y.trait = Ped[,2]
-	X = as.matrix(Ped[,3:dim(Ped)[2]])
+	Y.trait = ped[,2]
+	X = as.matrix(ped[,3:dim(ped)[2]])
 
 	##### STEP 2: Under the NULL we call FaST-LMM to estimate the VCs ####
-	res.VC.FaST = VC.FaST.LMM(Ped, tfam, eigenDir, simFileName, phenoFileName, tfamFile)
-	Estim.Sigma.RG = res.VC.FaST$Polygenic
-	Estim.Sigma.e = res.VC.FaST$Env
-	S = res.VC.FaST$S
-	U = res.VC.FaST$U
-
+	estim.sigma.RG = as.numeric(as.character(fastlmm$nullGeneticVar)); print(estim.sigma.RG)
+	estim.sigma.e = as.numeric(as.character(fastlmm$nullResidualVar)); print(estim.sigma.e)
+	S = fastlmm$S
+	U = fastlmm$U
+    q() 
 	##### STEP 3: Calculation of weights matrix W and the matrix K =GWG #####
 	freq.MAF = apply(X, 2, mean)/2
 
@@ -110,7 +102,7 @@ ASKAT <- function(Ped, tfam, kin1, simFileName, phenoFileName, tfamFile ) {
 	}
 
 	##### STEP 4: ASKAT score test statistic calculations #####
-	Gamma = Estim.Sigma.RG / Estim.Sigma.e
+	Gamma = estim.sigma.RG / estim.sigma.e
 	D.0 = (Gamma * S)  + diag(1, dim(X)[1], dim(X)[1])
 	inv.sqrt.D.0 = diag(1/sqrt(diag(D.0)))
 
@@ -124,7 +116,7 @@ ASKAT <- function(Ped, tfam, kin1, simFileName, phenoFileName, tfamFile ) {
 
 	P.0.tilde = diag(1, dim(U)[1], dim(U)[2]) - ( X.tilde %*% solve( t(X.tilde) %*% X.tilde ) %*% t(X.tilde) )
 	res = P.0.tilde %*% Y.tilde
-	s2 = Estim.Sigma.e
+	s2 = estim.sigma.e
 
 	Q = t(res) %*% K.tilde
 	Q = Q %*% res/(2 * s2)
@@ -134,54 +126,7 @@ ASKAT <- function(Ped, tfam, kin1, simFileName, phenoFileName, tfamFile ) {
 	pvalue.davies = out$p.value
 	lambda = out$lambda
 
-	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = Estim.Sigma.RG, Env.VC = Estim.Sigma.e, lambda = lambda, tmp.kinshipFileName <- simFileName) );
-}
-
-#-------------------------------------------------------------------------------
-# Write a TPED file for FastLmm
-# NOTE: Since FaST-LMM doesn't actually use this file, we can use any random data
-#-------------------------------------------------------------------------------
-Geno.FaST.LMM <- function(geno, tpedFile){
-
-#	# Create a new vector
-#	geno.FaST = vector(length = 2 * length(geno))
-#
-#	# Code SNPs as hom/het using 'T' and 'A' (4 and 1)
-#	# So we code {'T/T', 'A/T', 'A/A'} as {'4/4', '1/4', '1/1'}
-#	for (i in 1:length(geno)){
-#
-#		cat("DEBUG CODE!!!!\n");
-#		geno[i] = floor( 3 * runif(200) )
-#
-#		if (geno[i] == 0){
-#			geno.FaST[((2*(i-1))+1)] = 4
-#			geno.FaST[(2*i)] = 4
-#		}
-#
-#		if (geno[i] == 1){
-#			geno.FaST[((2*(i-1))+1)] = 1
-#			geno.FaST[(2*i)] = 4
-#		}
-#
-#		if (geno[i] == 2){
-#			geno.FaST[((2*(i-1))+1)] = 1
-#			geno.FaST[(2*i)] = 1
-#		}
-#	}
-
-	# File already exists: Don't even bother.
-	if( file.exists(tpedFile) )	{ 
-		cat('File ', tpedFile ,' already exists. Nothing done.\n');
-		return; 
-	}
-
-	geno.FaST = floor( 2 * runif(2 * length(geno)) ) + 1;	# A random vector of '1' and '2' (representing 'A' and 'C'). Note: Any pther combination should also do the trick.
-	geno.test = c(1, "snp0", 0, 0, 1, geno.FaST)
-	geno.test = rbind(geno.test)
-
-	if( debug )	{ cat('Writing tped matrix to file: ', tpedFile , '\tsize: ', dim(geno.test), '\n' ); }
-	cat('GENO.TEST:', geno.test , '\n');
-	write.matrix(geno.test, file = tpedFile, sep="")
+	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = estim.sigma.RG, Env.VC = estim.sigma.e, lambda = lambda) );
 }
 
 #-------------------------------------------------------------------------------
@@ -229,100 +174,6 @@ Get_PValue.Modif <- function(K, Q){
 }
 
 #-------------------------------------------------------------------------------
-# Invoke FastLmm and get VC
-#
-# Note: In order to invoke Fast-LMM we must create some temporal files
-#       After invoking the program, we have to read and parse the result files
-#-------------------------------------------------------------------------------
-VC.FaST.LMM <- function(Ped, tfam, eigenDir, kinshipFileName, phenoFileName, tfamFile ){
-	# TMP File names to be used
-	genoName <- tmpFile("geno_test", sep="_");				# FaSTLMM version 2.03 doesn't allow any '/' in this name (bug)
-	genoTfamFileName <- paste(genoName,".tfam", sep="");
-	genoTpedFileName <- paste(genoName,".tped", sep="");
-	genoOutFileName <- paste(genoName,".out.txt", sep="");
-	fastlmmOutFileName <- tmpFile("OUTFaST-LMM.txt");
-
-	#---
-	# Create TMP files used by the program
-	#---
-
-	# Create TPED file
-	Y.trait = Ped[,2]
-	FID = tfam[,1]
-	IID = tfam[,2]
-	Geno = Ped[,3]
-	Geno.FaST.LMM(Geno, genoTpedFileName)
-
-	# Copy TFAM file
-	if( ! file.exists(genoTfamFileName) ) {
-		file.copy(tfamFile, genoTfamFileName);
-	}
-
-	#---
-	# Invoke Fast-LMM
-	#---
-
-	# Create Fast-LMM command line and execute it
-	fastlmmcCmd <- paste( path.FastLmm		# Full path to fastlmm binary
-		, "-tfile", genoName				# basename for PLINK's transposed .tfam and .tped files
-		, "-sim" , kinshipFileName			# file containing the genetic similarity matrix
-		, "-eigenOut", eigenDir				# save the spectral decomposition object to the directoryname
-		, "-pheno", phenoFileName			# name of phenotype file
-		, "-out", genoOutFileName			# name of output file
-		, "-maxThreads", 1					# Number of threads to use (by the math library). We perform paralelization, so we need to set this to one
-		, "-mpheno 1"						# index for phenotype in -pheno file to process, starting at 1 for the first phenotype column
-		);
-	if( debug )	{ cat('Execute system command: ', fastlmmcCmd , '\n' ); }
-	retCode <- system(fastlmmcCmd)
-	if( retCode != 0 )	fatalError( paste("Cannot execute command\n\t", fastlmmcCmd) );
-
-	#---
-	# Read Fast-LMM results (from TMP files)
-	#---
-
-	# Read results from 'genoOutFileName'
-	if( debug )	{ cat('Reading VC.FaST.LMM table from: ', genoOutFileName , '\n' ); }
-	VC.FaST.LMM = read.table(genoOutFileName, header=TRUE)
-	Estim.Sigma.RG = VC.FaST.LMM$NullGeneticVar
-	Estim.Sigma.e = VC.FaST.LMM$NullResidualVar
-	cat('\tEstim.Sigma.RG  : ', Estim.Sigma.RG, '\n');
-	cat('\tEstim.Sigma.e   : ', Estim.Sigma.e, '\n');
-
-	# Read 'S' matrix
-	p = dim(Ped)[1]
-	sFileName <- paste(eigenDir,"S.bin", sep="/")
-	if( debug )	{ cat('Reading read.SVD.bin S-matrix from: ', sFileName , '\n' ); }
-	read.SVD.bin = file(sFileName, "rb")
-	S = readBin(read.SVD.bin, "numeric", n=p, endian="little")
-	close(read.SVD.bin)
-	S = diag(sort(S, decreasing = T))
-
-	# Read 'U' matrix
-	uFileName <- paste(eigenDir,"U.bin", sep="/")
-	if( debug )	{ cat('Reading upper read.SVD.bin U-matrix from: ', uFileName , '\n' ); }
-	read.SVD.bin = file(uFileName, "rb")
-	U = readBin(read.SVD.bin, "numeric", n=p*p, endian="little")
-	close(read.SVD.bin)
-
-	U = matrix(U,p,p, byrow=F)
-	U = U[ ,ncol(U):1]
-
-	# Remove TMP files and dirs
-	# WARNING: A function should NOT have side effects (e.g. deleting a file created somewhere else)
-	if( !debug) unlink( c(fastlmmOutFileName, genoOutFileName ) );
-	if( !debug) unlink( eigenDir, recursive = TRUE)
-	# unlink( kinshipFileName );	# May be we can re-use the kinship matrix file in the next iteration
-
-	# Create results list
-	return( list(Polygenic = Estim.Sigma.RG, Env = Estim.Sigma.e, S = S, U = U) );
-}
-
-#-------------------------------------------------------------------------------
-# Create a name for a temporal file
-#-------------------------------------------------------------------------------
-tmpFile <- function(name, sep="/")	{ return( paste(tmpDir, name, sep=sep) ); }
-
-#-------------------------------------------------------------------------------
 # Fatal error
 #-------------------------------------------------------------------------------
 fatalError <- function(errStr)	{ 
@@ -346,7 +197,6 @@ fatalError <- function(errStr)	{
 #---
 path.FastLmm   <- 'fastlmmc'
 debug          <- FALSE
-debug          <- TRUE
 exitAfterError <- !debug		# Exit after any error, (unless we are in debug mode)
 tmpDir         <- '.'
 
@@ -358,27 +208,19 @@ if( !exists('cmdLineArgs') )    { cmdLineArgs <- commandArgs(trailingOnly = TRUE
 # Stop if there are no command line argument
 if( length(cmdLineArgs) < 1 ) { fatalError('No command line arguments!\n'); }
 
-dataFile        <- cmdLineArgs[1];
+dataFileStr     <- cmdLineArgs[1];
 tfamFile        <- cmdLineArgs[2];
 kinshipFile     <- cmdLineArgs[3];
 subBlockSize    <- as.integer( cmdLineArgs[4] );
-tmpDir          <- cmdLineArgs[5];
-path.FastLmm    <- cmdLineArgs[6];
-onlyOnce        <- (cmdLineArgs[7] == 'TRUE') || (cmdLineArgs[7] == 'T')
-simFileName     <- cmdLineArgs[8];
-phenoFileName   <- cmdLineArgs[9];
+onlyOnce        <- (cmdLineArgs[5] == 'TRUE') || (cmdLineArgs[5] == 'T')
 debug           <- debug || onlyOnce;		# Set debug mode
 
 cat("ASKAT arguments:\n");
-cat("\tData file           : ", dataFile , "\n" );
+cat("\tData file/s         : ", dataFileStr , "\n" );
 cat("\tTFAM file           : ", tfamFile , "\n" );
 cat("\tKinship matrix file : ", kinshipFile , "\n" );
 cat("\tSub-block size      : ", subBlockSize , "\n" );
 cat("\tTemporal dir        : ", tmpDir , "\n" );
-cat("\tFast-LMM path       : ", path.FastLmm , "\n" );
-cat("\tOnly once           : ", onlyOnce , "\n" );
-cat("\tSimilarity file     : ", simFileName , "\n" );
-cat("\tPhenotype file      : ", phenoFileName , "\n" );
 
 #---
 # Should we exit immediatly after any error or warning?
@@ -393,55 +235,61 @@ if( exitAfterError ) {
 #---
 # Read files
 #---
-if( debug )	{ cat('Load data file: ', dataFile, '\n' ); }
-dat  <- read.csv(dataFile, sep="", header=FALSE );
-
 if( debug )	{ cat('Loading tfam file: ', tfamFile , '\n' ); }
 tfam <- read.csv(tfamFile, sep="", header=FALSE, col.names=c('familyId','individualId', 'paternalId', 'maternalId', 'sex', 'phenotype') );
 
-if( debug )	{ cat('Loading kinship file: ', kinshipFile , '\n' ); }
+if( debug )	{ cat('Loading kinship & FaST-LMM file: ', kinshipFile , '\n' ); }
 load(kinshipFile);
 
-#---
-# Iterate for each sub-block
-#---
-snpIdx <- 5:dim(dat)[2];							# Columns having SNP data
-ped12 <- tfam[,c(2,6)]; 							# First two columns of data structure (inividualID and phenotype)
-sbIdx <- seq( 1, dim(dat)[1] , by = subBlockSize );	# SubBlock indeces
 
-# Iterate on every sub-block
-for( i in sbIdx )  {
-	# Create pedigree matrix for ASKAT function
-	maxBlock <- min( dim(dat)[1] , i+subBlockSize-1 );
-	snpsBlock <- i:maxBlock;
-	ped <- cbind( ped12, t(dat[snpsBlock,snpIdx]) );
+# More than one file (comma separated list of files)
+dataFiles <- unlist( strsplit(dataFileStr , ",") )
 
-	if( debug )	{ cat('Iterating on sub-block: ', paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="") , '\n' ); }
+for( dataFile in dataFiles ) {
+	cat("Data file : ", dataFile , "\n" );
 
-	# Call ASKAT
-	results <- ASKAT(ped, tfam, kinshipMatrix, simFileName, phenoFileName, tfamFile)
+	# Read data file
+	if( debug )	{ cat('Load data file: ', dataFile, '\n' ); }
+	dat  <- read.csv(dataFile, sep="", header=FALSE );
 
-	# Show results
-	cat("\nASKAT_RESUTS:"
-		, "p-value:" , results$pvalue.ASKAT 
-		, "Block:", dataFile
-		, "Sub-Block:", paste( i, ' - ', maxBlock, sep="" )
-		, "chr:pos:", paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="")
-		, "Id:", paste( dat[i,2], ' - ', dat[maxBlock,2], sep="" )
-		, "Q:", results$Q.ASKAT 
-		, "Polygenic.VC:", results$Polygenic.VC
-		, "Env.VC:", results$Env.VC
-		, "lambda:", results$lambda
-		, "\n"
-		, sep="\t" 
-		);
 
-	if( onlyOnce )	{ 
-		# Excecute only one sub-block? => Stop now
-		fatalError('Execute onlyOnce is set. Stopping after first iteration.\n'); 
+	#---
+	# Iterate for each sub-block
+	#---
+	snpIdx <- 5:dim(dat)[2];							# Columns having SNP data
+	ped12 <- tfam[,c(2,6)]; 							# First two columns of data structure (inividualID and phenotype)
+	sbIdx <- seq( 1, dim(dat)[1] , by = subBlockSize );	# SubBlock indeces
+
+	# Iterate on every sub-block
+	for( i in sbIdx )  {
+		# Create pedigree matrix for ASKAT function
+		maxBlock <- min( dim(dat)[1] , i+subBlockSize-1 );
+		snpsBlock <- i:maxBlock;
+		ped <- cbind( ped12, t(dat[snpsBlock,snpIdx]) );
+
+		if( debug )	{ cat('Iterating on sub-block: ', paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="") , '\n' ); }
+
+		# Call ASKAT
+		results <- ASKAT(ped, fastlmm)
+
+		# Show results
+		cat("\nASKAT_RESUTS:"
+			, "p-value:" , results$pvalue.ASKAT 
+			, "chr:pos:", paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="")
+			, "Block:", dataFile
+			, "Sub-Block:", paste( i, ' - ', maxBlock, sep="" )
+			, "Id:", paste( dat[i,2], ' - ', dat[maxBlock,2], sep="" )
+			, "Q:", results$Q.ASKAT 
+			, "Polygenic.VC:", results$Polygenic.VC
+			, "Env.VC:", results$Env.VC
+			, "lambda:", results$lambda
+			, "\n"
+			, sep="\t" 
+			);
+
+		if( onlyOnce )	{ 
+			# Excecute only one sub-block? => Stop now
+			fatalError('Execute onlyOnce is set. Stopping after first iteration.\n'); 
+		}
 	}
 }
-
-# Remove tmp kinship matrix file (used for fastlmm)
-if( !debug) unlink( results$tmp.kinshipFileName );
-

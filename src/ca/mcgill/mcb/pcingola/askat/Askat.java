@@ -1,5 +1,6 @@
 package ca.mcgill.mcb.pcingola.askat;
 
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,9 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import ca.mcgill.mcb.pcingola.Pcingola;
-import ca.mcgill.mcb.pcingola.fileIterator.BedFileIterator;
-import ca.mcgill.mcb.pcingola.fileIterator.LineFileIterator;
-import ca.mcgill.mcb.pcingola.fileIterator.VcfFileIterator;
+import ca.mcgill.mcb.pcingola.fileIterator.*;
 import ca.mcgill.mcb.pcingola.interval.Genome;
 import ca.mcgill.mcb.pcingola.interval.SeqChange;
 import ca.mcgill.mcb.pcingola.osCmd.OsCmdRunner;
@@ -23,6 +22,9 @@ import ca.mcgill.mcb.pcingola.util.Gpr;
 import ca.mcgill.mcb.pcingola.util.Timer;
 import ca.mcgill.mcb.pcingola.vcf.VcfEntry;
 import ca.mcgill.mcb.pcingola.vcf.VcfGenotype;
+
+
+
 
 /**
  * Command line wrapper to ASKAT method
@@ -171,11 +173,15 @@ public class Askat implements CommandLine {
 
 		if (!Gpr.canRead(tfamFile)) fatalError("Cannot read file '" + tfamFile + "'");
 
-		// Check that TPED and TFAM files have the same number of genotypes
+
+
+    // Check that TPED and TFAM files have the same number of genotypes
 		int tfamNumSamples = Gpr.countLines(tfamFile);
 		int tpedNumSamples = (Gpr.countColumns(tpedFile) - 4) / 2;
 		if (tfamNumSamples != tpedNumSamples) fatalError("Number of samples in TPED and TFAM files do not match:\n\t" + tfamNumSamples + "\tsamples in " + tfamFile + "\n\t" + tpedNumSamples + "\tsamples in " + tpedFile + "\n\tNote: TFAM samples are counted as number of lines. TPED samples are counted as (number_of_columns - 4)/2");
-	}
+
+  }
+
 
 	/**
 	 * Check that a program is installed
@@ -452,7 +458,7 @@ public class Askat implements CommandLine {
 		// Salutation message
 		if (verbose) {
 			Timer.showStdErr("ASKAT algorithm by Karim Oualkacha");
-			Timer.showStdErr(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n");
+/*			Timer.showStdErr(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n"); */
 		}
 
 		// Read intervals from BED file
@@ -661,7 +667,7 @@ public class Askat implements CommandLine {
 	public void usage(String message) {
 		if (message != null) System.err.println("Error: " + message + "\n");
 		System.err.println("ASKAT algorithm by Karim Oualkacha");
-		System.err.println(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n");
+		/* System.err.println(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n"); */
 		System.err.println("Usage: java -jar " + this.getClass().getSimpleName() + ".jar [options] genotype");
 		System.err.println("Options:");
 		System.err.println("\t-b <num>       : Number of SNPs used for calculating the kinship matrix. Default: " + blockSize);
@@ -848,5 +854,12 @@ public class Askat implements CommandLine {
 		}
 
 		return use;
+	}
+
+	//UPD: Override because of inconsistency between old and new version of CommandLine class?? 
+	@Override
+	public String[] getArgs() {
+		// TODO remove and replace old parser with the new one?
+		return null;
 	}
 }

@@ -98,7 +98,8 @@ createSim <- function(simFileName, tfam, kinshipMatrix ) {
 	cat('Writing simmilarity matrix to file: ', simFileName , '\n' );
 	write.table(c('var\t'), file = simFileName, quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE, eol = "");	# This is just to create the required 'var'
 	write.table(kin.FaST, file = simFileName, quote = FALSE, sep = "\t", row.names = TRUE , col.names = TRUE , append=TRUE); # Now we dump the data
-}
+  //write(t(kin.FaST[ ,1:(dim(kin.FaST)[1])]), file = file.name.data, ncolumns = dim(kin.FaST)[1], sep= "\t")
+} //Above comment is from working R-askat code
 
 #-------------------------------------------------------------------------------
 # Main

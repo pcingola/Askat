@@ -81,50 +81,73 @@ ASKAT <- function(ped, fastlmm) {
 	X = as.matrix(ped[,3:dim(ped)[2]])
 
 	##### STEP 2: Under the NULL we call FaST-LMM to estimate the VCs ####
-	estim.sigma.RG = fastlmm$nullGeneticVar
-	estim.sigma.e = fastlmm$nullResidualVar
+	estim.sigma.RG = as.numeric(as.character(fastlmm$nullGeneticVar));
+	estim.sigma.e = as.numeric(as.character(fastlmm$nullResidualVar));
+		
 	S = fastlmm$S
 	U = fastlmm$U
-
+    #print(U[U!=0])
 	##### STEP 3: Calculation of weights matrix W and the matrix K =GWG #####
 	freq.MAF = apply(X, 2, mean)/2
+	#Geno.no.sparse = which(!freq.MAF==0)
+    #X = X[,Geno.no.sparse]
+    #freq.MAF = apply(X, 2, mean)/2
 
-	if( length(freq.MAF) == 1){
-		w = (dbeta(freq.MAF, 1, 25))^2
-		K = w * X %*% t(X)
-	} else {
-		w = vector(length = length(freq.MAF))
-		for (i in 1:length(freq.MAF)){
-			w[i] = (dbeta(freq.MAF[i], 1, 25))^2
-		}
-		w = diag(w)
-		K = X %*% w %*% t(X)
-	}
+	#Attempt to reduce time to O(N^2), using PCA trick
+  
+  	if( length(freq.MAF) == 1){
+    	w <- dbeta(freq.MAF, 1, 25)
+    	K.sqrt <- w * t(X)
+  	} else {
+    	w <- vector(length = length(freq.MAF))
+    	for (i in 1:length(freq.MAF)){
+    	  w[i] <- dbeta(freq.MAF[i], 1, 25)
+    	}
+    	w <- diag(w)
+    	K.sqrt <- w %*% t(X)
+  	}
+	
+##### STEP 2: ASKAT score test statistic calculations #####
 
-	##### STEP 4: ASKAT score test statistic calculations #####
-	Gamma = estim.sigma.RG / estim.sigma.e
-	D.0 = (Gamma * S)  + diag(1, dim(X)[1], dim(X)[1])
-	inv.sqrt.D.0 = diag(1/sqrt(diag(D.0)))
 
-	K.tilde = inv.sqrt.D.0 %*% t(U)
-
-	un.n = c(rep(1,dim(U)[1]))
-	X.tilde = K.tilde %*% un.n
-	Y.tilde = K.tilde %*% Y.trait
-
-	K.tilde =  K.tilde %*% K %*% t(K.tilde)
-
-	P.0.tilde = diag(1, dim(U)[1], dim(U)[2]) - ( X.tilde %*% solve( t(X.tilde) %*% X.tilde ) %*% t(X.tilde) )
-	res = P.0.tilde %*% Y.tilde
+	Gamma = estim.sigma.RG[1] / estim.sigma.e[1] 
+	UT<-t(U)
+	D.0 <- (Gamma * S) + diag(1, dim(X)[1], dim(X)[1])
+	inv.sqrt.D.0 <- diag(1/sqrt(diag(D.0)))
+	inv.D.0 = diag(1/diag(D.0))
+	un.n <- c(rep(1,dim(U)[1]))
+	Z <- 1/(( t(un.n) %*% (U %*% (inv.D.0 %*% (UT %*% un.n))))[1,1]) 
+	X.tilde <- inv.sqrt.D.0 %*% (UT %*% un.n)
+	Y.tilde <- inv.sqrt.D.0 %*% (UT %*% Y.trait)
 	s2 = estim.sigma.e
+	P.0.tilde = (diag(1, dim(U)[1], dim(U)[2])) - (X.tilde %*% Z) %*% ((t(X.tilde)))
+	#K.tilde2 <- inv.sqrt.D.0 %*% (UT %*% (K %*% (U %*% inv.sqrt.D.0))) 
+	#W1 <- P.0.tilde %*% K.tilde2 %*% P.0.tilde
+	#PDU <- P.0.tilde %*% inv.sqrt.D.0 %*% UT
+	#PDUT <- t(PDU)
+	#W1 <- P.0.tilde %*% inv.sqrt.D.0 %*% UT %*% K %*% U %*% inv.sqrt.D.0 %*% P.0.tilde #55 s
+	RM <- ((K.sqrt %*% U) %*% inv.sqrt.D.0) %*%  P.0.tilde# 44 s
+	W <- RM %*% t(RM)
 
-	Q = t(res) %*% K.tilde
-	Q = Q %*% res/(2 * s2)
-	W1 = P.0.tilde %*% K.tilde
-	W1 = W1 %*% P.0.tilde/2
-	out = Get_PValue.Modif(W1, Q)
-	pvalue.davies = out$p.value
-	lambda = out$lambda
+	#P.0.tilde is symmetric
+	#res <- P.0.tilde %*% Y.tilde
+	Q <- (t(Y.tilde) %*% t(RM) %*% ((RM %*% Y.tilde)))/(2 * s2)
+	#print("time for Q computation, after associativity update")
+	#print(proc.time()-ptm)
+
+	#print("Q, Q2, Q-Q2"); print(c(Q, Q2, Q-Q2))
+
+
+	#W1 = P.0.tilde %*% K.tilde
+	#W1 = W1 %*% P.0.tilde/2
+	#K.tilde = inv.sqrt.D.0 %*% UT
+
+	#P.0.tilde = (diag(1, dim(U)[1], dim(U)[2])) - (X.tilde %*% Z) %*% ((t(X.tilde)))
+	#W1 = P.0.tilde %*% K.tilde2 %*% P.0.tilde/2#UPD: on average 0.5 s gain
+   
+  	out = Get_PValue.Modif(W/2, Q)
+  	pvalue.davies = out$p.value
+  	lambda = out$lambda
 
 	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = estim.sigma.RG, Env.VC = estim.sigma.e, lambda = lambda) );
 }
@@ -133,7 +156,7 @@ ASKAT <- function(ped, fastlmm) {
 # Get lambda
 #-------------------------------------------------------------------------------
 Get_Lambda <- function (K) {
-	out.s <- eigen(K, symmetric = TRUE)
+	out.s <- eigen(K, symmetric = TRUE, only.values = TRUE)
 	lambda1 <- out.s$values
 	IDX1 <- which(lambda1 >= 0)
 	IDX2 <- which(lambda1 > mean(lambda1[IDX1])/1e+05)

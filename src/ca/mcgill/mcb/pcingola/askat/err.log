@@ -1,0 +1,885 @@
+00:00:00.000	ASKAT algorithm by Karim Oualkacha
+00:00:00.056	Checking dependencies.
+00:00:00.056	Checking dependency: Program 'R'
+00:00:00.094		Executing command: R --vanilla -e q() 
+
+R version 3.1.0 beta (2014-03-28 r65330) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> q()
+00:00:00.326	OK
+00:00:00.327	Checking dependency: Program 'Rscript'
+00:00:00.327		Executing command: Rscript -e q() 
+00:00:00.428	OK
+00:00:00.428	Checking dependency: Program 'fastlmmc'
+00:00:00.429		Executing command: fastlmmc 
+java.io.IOException: Cannot run program "fastlmmc": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1042)
+	at ca.mcgill.mcb.pcingola.osCmd.ExecuteOsCommand.exec(ExecuteOsCommand.java:64)
+	at ca.mcgill.mcb.pcingola.osCmd.ExecuteOsCommand.run(ExecuteOsCommand.java:240)
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:187)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:134)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1023)
+	... 2 more
+00:00:00.530	Not found
+00:00:00.531	Checking dependency: Program './fastlmmc'
+00:00:00.531		Executing command: ./fastlmmc 
+
+
+FastLmmC v1.09.20120405 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Apr  5 2012 at 12:43:45 by BOBD02 for Linux
+  using MKL v10.03.07 - Build: 20111003
+
+ ++    Start Processing CommandLine:
+
+Description:
+  FastLmmC computes Linear Mixed Model GWAS
+
+Usage:
+  FastLmmC -option <parameter>
+
+  -file basefilename
+       basename for PLINK's .map and .ped files
+
+  -bfile basefilename
+       basename for PLINK's binary .bed .fam, and .bin files
+
+  -tfile basefilename
+       basename for PLINK's transposed .tfam and .tped files
+
+  -dfile basefilename
+       basename for PLINK's dosage .dat, .fam, and optional .map files
+
+  -pheno filename
+       name of phenotype file
+
+  -mpheno index
+       index for phenotype in -pheno file to process, starting at 1 
+       for the first phenotype column. Cannot be used together with 
+       -pheno-name. Default: 1.
+
+  -pheno-name phenotypeName
+       phenotype name for phenotype in -pheno file to process.  If 
+       this option is used, the phenotype name must be specified in 
+       the header row.  Cannot be used together with -mpheno.
+
+  -numjobs <int>
+       Partion the SNPS into <int> groups and run FaSTLMM on the 
+       partition specified by -thisjob
+       Requires thisjob to be set too.
+
+  -thisjob <int>
+       Specifies which partition of SNPS created by -numjobs to 
+       process with FaSTLMM
+       Requires numjobs to be set too.
+
+  -extract filename
+       This is a SNP filter option.  FaSTLMM will only analyze the
+       SNPs explicitly listed in the 'filename'
+
+  -extractSim filename
+       This is a genetic similarity SNP filter option.  FaSTLMM will
+       only use SNPs explicitly listed in the 'filename' for computing
+       genetic similarity.
+
+  -extractSimTopK filename <int>
+       Similar to -extractSim, this is a genetic similarity SNP filter
+       option.  FaSTLMM will only use the first <int> SNPs explicitly
+       listed in the 'filename' for computing genetic similarity.
+
+  -fileSim basefilename
+       basename for PLINK's .map and .ped files for computing 
+       genetic similarity
+
+  -bfileSim basefilename
+       basename for PLINK's binary .bed, .fam, and .bin files for 
+       building genetic similarity
+
+  -tfileSim basefilename
+       basename for PLINK's transposed .tfam and .tped files for 
+       building genetic similarity
+
+  -dfileSim basefilename
+       basename for PLINK's dosage .dat, .fam, and optional .map 
+       files for building genetic similarity
+
+  -sim filename
+       file containing the genetic similarity matrix in tab-delimited 
+       ascii double values (overrides -fileSim)
+
+  -simOut filename
+       write out genetic similarity matrix to filename in tab-delimited 
+       ascii double values
+
+  -covar filename
+       optional file containing the covariates
+
+  -missingPhenotype <dbl>
+       identifier for missing values.  If the phenotype for an 
+       individual is missing, then the individual is ignored.  
+       If a covariate value for an individual is missing, then 
+       it is mean imputed.
+
+  -out filename
+       the name of the output file. 
+       Default value is [basefilename].out.txt
+
+  -verboseOut
+       Write more detailed information to the output file.
+       This includes things like logDelta, GeneticVar, etc.
+
+  -ML
+       use maximum likelihood parameter learning (default ML)
+
+  -REML
+       use restricted Maximum likelihood parameter learning (default ML)
+
+  -simLearnType [FULL/ONCE]
+       if set to Once (the default), then delta, the ratio of residual 
+       to genetic covariance, is optimized only for the null model and 
+       used for each alternate model. If set to Full, then the ratio 
+        is re-estimated for each alternative model.
+
+  -simType [RRM/COVARIANCE]
+       if set to RRM (the default), then the RRM is used for genetic 
+       similarity.  If set to COVARIANCE, then the empirical SNP 
+       covariance matrix is used.
+
+  -brentStarts <int>
+       number of interval boundary points for optimization of delta 
+       (see Section 2.1 of the Supplemental Information).  
+       Default: 100.
+
+  -brentMaxIter <int>
+       maximum  number of iterations per interval for the 
+       optimization of delta.  Default: 1e5.
+
+  -brentMinLogVal <dbl>
+       lower interval threshold for (log) delta optimization. 
+       Default: -10.
+
+  -brentMaxLogVal <dbl>
+       upper interval treshold for (log) delta optimization.
+       Default: 10.
+
+  -brentTol <dbl>
+       convergence tolerance of Brent�s method used to optimize delta.
+       Default: 1e-6.
+
+  -HWE
+       use the Hardy-Weinberg estimate for the SNP variance instead 
+       of empirical estimate. This option is recommended for sample 
+       sizes that are too small for accurate variance estimation.
+
+  -runGwasType [RUN/NORUN]
+       run GWAS or exit after computing the spectral decomposition of 
+       the genetic similarity matrix. Use NORUN, to cache the spectral 
+       decomposition.  This option, in combination with the next, is 
+       useful for parallelizing the tests of many SNPs. Default: RUN.
+
+  -eigen directoryname
+       load the spectral decomposition object from the directoryname.  
+       When specified, the computations leading to the spectral 
+       decomposition of the genetic similarity matrix are skipped 
+       (note that that SNP file specifying the genetic similarities 
+       must still be given).
+
+  -eigenOut directoryname
+       save the spectral decomposition object to the directoryname. 
+       May be used with -runGwasType option.
+
+  -logDelta <dbl>
+       use a pre-specified log(delta) for both null and alternative models
+
+  -linReg
+       use a linear regression model instead of a linear mixed model
+
+  -groups [filename]
+       specifies the filename
+
+  -simGroups [filename]
+       file containing the group-by-group similarity matrix
+
+  Configuration Options:
+
+  -MaxChromosomeValue <int>
+       PLINK format specified human chromosome numbers and are thus
+       limited to 0-26 (1-23, x=23, y=24, xy=25, mt=26).  Use
+       MaxChromosomeValue specifies a different limit for the
+       chromosome number.
+
+  Debug Options:
+
+  -Verbose
+       optionally print out log-likelihoods of null and alternative 
+       models to the standard output
+
+  -Log
+       Log tells the program to write more progress and debug data
+       to a series of *.log files.
+
+  -LogDir [directory name]
+       LogDir implies -log and sets the directory to write the output
+       Default: .\Logs
+
+  -MaxThreads <int>
+       Suggests the number of threads for the math library to use
+
+-------------------------------------------------------------------
+A sample command would be:
+  fastlmmc -tfile geno_test -tfileSim geno_cov -pheno pheno.txt -covar covariate.txt
+
+  This requires the following input files:
+
+    geno_test.tfam, geno_test.tped
+      These use PLINKs transposed file format for the test SNPs
+
+    geno_cov.tfam, geno_cov.tped
+      Same format for the SNPs used to compute the RRM
+
+    pheno.txt
+      PLINKs alternate phenotype file
+
+    covariate.txt
+      The covariate file follows PLINKs covariate file format. 
+      No header line is allowed.
+
+  This produces geno_test.output.txt in the same location 
+  as geno_test files.
+00:00:00.634	OK
+00:00:00.634	Checking dependency: R library 'GenABEL'
+00:00:00.634		Executing command: R --vanilla -e library(GenABEL) 
+
+R version 3.1.0 beta (2014-03-28 r65330) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(GenABEL)
+Loading required package: MASS
+Loading required package: GenABEL.data
+> 
+> 
+00:00:01.239	Checking dependency: R library 'CompQuadForm'
+00:00:01.239		Executing command: R --vanilla -e library(CompQuadForm) 
+
+R version 3.1.0 beta (2014-03-28 r65330) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(CompQuadForm)
+> 
+> 
+00:00:01.426	Checking dependency: R library 'nFactors'
+00:00:01.426		Executing command: R --vanilla -e library(nFactors) 
+
+R version 3.1.0 beta (2014-03-28 r65330) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(nFactors)
+Loading required package: MASS
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+> 
+> 
+00:00:01.743	Checking dependency: R library 'MASS'
+00:00:01.743		Executing command: R --vanilla -e library(MASS) 
+
+R version 3.1.0 beta (2014-03-28 r65330) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(MASS)
+> 
+> 
+00:00:01.939	All dependencies found.
+
+00:00:01.945	Creating blocks & Running algorithm on each block.
+00:00:01.955	Creating block './karim4k/karim4k.block.1_100.tped'
+00:00:02.687	Running block: ./karim4k/karim4k.block.1_100.tped
+00:00:02.689	Calculating kinship matrix for block: 
+00:00:02.689		Executing command: Rscript ./r/kinship.r ./karim4k/karim4k.block.1_100.tped ./karim4k/karim4k.tfam .genabel.gen .genabel.phen .kinship.RData .sim .pheno.txt ./fastlmmc 
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+Kinship arguments:
+	Input TPED file                 : ./karim4k/karim4k.block.1_100.tped 
+	Input TFAM file                 : ./karim4k/karim4k.tfam 
+	Output GenABEL 'genotype' file  : .genabel.gen 
+	Output GenABEL 'phenotype' file : .genabel.phen 
+	Output Kinship matrix file      : .kinship.RData 
+	Output SIM matrix file          : .sim 
+	Output pheno file               : .pheno.txt 
+	Fast-LMM path                   : ./fastlmmc 
+Reading TFAM file
+Writing GenABEL phenotype file
+Converting TPED to GenABEL file: .genabel.gen 
+Reading individual ids from file './karim4k/karim4k.tfam' ...
+... done.  Read 1160 individual ids from file './karim4k/karim4k.tfam'
+Reading genotypes from file './karim4k/karim4k.block.1_100.tped' ...
+...done.  Read 4000 SNPs from file './karim4k/karim4k.block.1_100.tped'
+Writing to file '.genabel.gen' ...
+... done.
+Loafind GenABEL file:  .genabel.gen 
+ids loaded...
+marker names loaded...
+chromosome data loaded...
+map data loaded...
+allele coding data loaded...
+strand data loaded...
+genotype data loaded...
+snp.data object created...
+assignment of gwaa.data object FORCED; X-errors were not checked!
+Calculating Kinship matrix (IBS)
+Calculating diagReplace on Kinship matrix
+Creating simmilarity
+Writing simmilarity matrix to file:  .sim 
+Warning message:
+In write.table(kin.FaST, file = simFile, quote = FALSE, sep = "\t",  :
+  appending column names to file
+Writing phenotype to file:  .pheno.txt 
+Invoking FaST-LMM
+Creating TPED file (for FaST-LMM)
+
+
+FastLmmC v1.09.20120405 - Factored Spectrally Transformed Linear Mixed Models
+  Copyright Microsoft Corporation
+  Compiled Apr  5 2012 at 12:43:45 by BOBD02 for Linux
+  using MKL v10.03.07 - Build: 20111003
+
+ ++    Start Processing CommandLine:
+ --      End Processing CommandLine:
+ ++      Start Loading FastLmm Data:
+  ++        Start Loading Test Data:
+   ++      Processing PLINK fileset: [./karim4k/karim4k.block.1_100_geno_test]
+     Number of Individuals Selected:    1160
+    Number of Phenotypes/Individual:       1
+          Number of SNPs/Individual:       1
+     Number of SNPs/Individual Used:       1
+   --  End Processing PLINK fileset: [./karim4k/karim4k.block.1_100_geno_test]
+  --          End Loading Test Data:
+ --        End Loading FastLmm Data:
+              Compute/Load EigenSym:
+  Compute full rank EigenSym Kernel:
+   Compute Eigenvectors from Kernel: ...
+Warning : Kernel is not positive semi definite!
+Warning : The smallest Eigenvalue is -2.3032e-01, the largest Eigenvalue is 5.6511e+00.
+Warning : Set negative eigenvalues to zero. Make the kernel positive semi definite. Done.
+                Start eigenSym Save: [./karim4k/karim4k.block.1_100/ASKAT_FaSTLMM]
+                  End eigenSym Save: [./karim4k/karim4k.block.1_100/ASKAT_FaSTLMM]
+             Compute GWAs using LMM:
+ ++         Start fullrank training:
+ --           End fullrank training:
+                       Write output: [./karim4k/karim4k.block.1_100_geno_test.out.txt]
+                 Total elapsed time:   0 us
+Saving results to file .kinship.RData 
+00:00:25.349	Starting block: 
+00:00:25.349	Counting lines in file './karim4k/karim4k.block.1_100.tped'
+00:00:25.391	Create batches.
+			File './karim4k/karim4k.block.1_100.tped' has 4000 lines.
+			Split up to 1000 lines per batch.
+00:00:25.394	Batch 1. Line 1. Creating batch : .1.askat
+00:00:25.672	Batch 2. Line 1001. Creating batch : .2.askat
+00:00:25.882	Batch 3. Line 2001. Creating batch : .3.askat
+00:00:26.095	Batch 4. Line 3001. Creating batch : .4.askat
+00:00:26.294	Starting Queue:
+	Size       : 4
+	Executing  : 0
+	Done       : 0
+	CPUs       : 4
+	Sleep time : 1000
+	[ Not started]	Thread[Thread-34,5,main]	Rscript ./r/askat.r .1.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE 
+	[ Not started]	Thread[Thread-36,5,main]	Rscript ./r/askat.r .2.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE 
+	[ Not started]	Thread[Thread-38,5,main]	Rscript ./r/askat.r .3.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE 
+	[ Not started]	Thread[Thread-40,5,main]	Rscript ./r/askat.r .4.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE 
+
+00:00:26.295	Running command: 'Thread[Thread-34,5,main]	Rscript ./r/askat.r .1.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE '
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+ASKAT arguments:
+	Data file/s         :  .1.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+00:00:27.296	Running command: 'Thread[Thread-36,5,main]	Rscript ./r/askat.r .2.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE '
+Data file :  .1.askat 
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+ASKAT arguments:
+	Data file/s         :  .2.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+00:00:28.297	Running command: 'Thread[Thread-38,5,main]	Rscript ./r/askat.r .3.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE '
+Data file :  .2.askat 
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+ASKAT arguments:
+	Data file/s         :  .3.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+00:00:29.297	Running command: 'Thread[Thread-40,5,main]	Rscript ./r/askat.r .4.askat ./karim4k/karim4k.tfam .kinship.RData 20 FALSE '
+Data file :  .3.askat 
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+ASKAT arguments:
+	Data file/s         :  .4.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+Data file :  .4.askat 
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+No traceback available 
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+Error executing command: Command: Thread[Thread-36,5,]	null
+
+---------- STDOUT: Start ----------
+ASKAT arguments:
+	Data file/s         :  .2.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+Data file :  .2.askat 
+No traceback available 
+
+---------- STDOUT: End ----------
+
+---------- STDERR: Start ----------
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+
+---------- STDERR: End ----------
+
+00:08:49.697	Finished command: Thread[Thread-36,5,]	null
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+No traceback available 
+Error executing command: Command: Thread[Thread-38,5,]	null
+
+---------- STDOUT: Start ----------
+ASKAT arguments:
+	Data file/s         :  .3.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+Data file :  .3.askat 
+No traceback available 
+
+---------- STDOUT: End ----------
+
+---------- STDERR: Start ----------
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+
+---------- STDERR: End ----------
+
+00:08:53.699	Finished command: Thread[Thread-38,5,]	null
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+No traceback available 
+Error executing command: Command: Thread[Thread-34,5,]	null
+
+---------- STDOUT: Start ----------
+ASKAT arguments:
+	Data file/s         :  .1.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+Data file :  .1.askat 
+No traceback available 
+
+---------- STDOUT: End ----------
+
+---------- STDERR: Start ----------
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+
+---------- STDERR: End ----------
+
+00:08:54.700	Finished command: Thread[Thread-34,5,]	null
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+No traceback available 
+Error executing command: Command: Thread[Thread-40,5,]	null
+
+---------- STDOUT: Start ----------
+ASKAT arguments:
+	Data file/s         :  .4.askat 
+	TFAM file           :  ./karim4k/karim4k.tfam 
+	Kinship matrix file :  .kinship.RData 
+	Sub-block size      :  20 
+	Temporal dir        :  . 
+Data file :  .4.askat 
+No traceback available 
+
+---------- STDOUT: End ----------
+
+---------- STDERR: Start ----------
+Loading required package: methods
+Loading required package: MASS
+Loading required package: GenABEL.data
+Loading required package: psych
+Loading required package: boot
+
+Attaching package: ‘boot’
+
+The following object is masked from ‘package:psych’:
+
+    logit
+
+Loading required package: lattice
+
+Attaching package: ‘lattice’
+
+The following object is masked from ‘package:boot’:
+
+    melanoma
+
+
+Attaching package: ‘nFactors’
+
+The following object is masked from ‘package:lattice’:
+
+    parallel
+
+Error in solve.default(t(X.tilde) %*% X.tilde) : 
+  system is computationally singular: reciprocal condition number = 0
+Calls: ASKAT -> solve -> solve.default
+In addition: Warning message:
+In Ops.factor(estim.sigma.RG, estim.sigma.e) : / not meaningful for factors
+
+---------- STDERR: End ----------
+
+00:08:56.700	Finished command: Thread[Thread-40,5,]	null
+00:08:57.700	Finished block: 
+00:08:57.701	Done. Filtered out (MAF) : 0 lines. Remaining: 4000 lines.
