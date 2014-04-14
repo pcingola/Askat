@@ -276,6 +276,7 @@ public class KinshipBlock {
 				, askat.tfamFile //
 				, kinshipFile //
 				, askat.getSubBlockSize() + "" //
+				, askat.getpACC() + "" //UPD new command line argument for the p-value accuracy
 				, Boolean.toString(debugOnlyOnce).toUpperCase() //
 		};
 
@@ -285,6 +286,7 @@ public class KinshipBlock {
 			@Override
 			public String filter(String line) {
 				if (line.startsWith(Askat.ASKAT_RESULTS)) return line;
+				if (line.startsWith(Askat.ASKAT_WARNING)) return line; //Warning in case p-value is not converged
 				return null;
 			}
 		};

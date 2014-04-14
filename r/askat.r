@@ -73,7 +73,7 @@ library(CompQuadForm)
 # fastlmm: Results form fastlmm program (see kinship.r)
 #
 #-------------------------------------------------------------------------------
-ASKAT <- function(ped, fastlmm) {
+ASKAT <- function(ped, fastlmm, pACC=1e-9) {
 
 	#####  STEP 1: Check for Missing Data and construction of pedigree without Missing Data   #####
 
@@ -121,11 +121,11 @@ ASKAT <- function(ped, fastlmm) {
 	W <- RM %*% t(RM)
 	
 	Q <- (t(Y.tilde) %*% t(RM) %*% ((RM %*% Y.tilde)))/(2 * s2)
-	out = Get_PValue.Modif(W/2, Q)
-  pvalue.davies = out$p.value
-  lambda = out$lambda
-
-	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = estim.sigma.RG, Env.VC = estim.sigma.e, lambda = lambda) );
+	out <- Get_PValue.Modif(W/2, Q, pACC)
+  pvalue.davies <- out$p.value
+  lambda <- out$lambda
+  is_converge <- out$is_converge 
+	return( list(pvalue.ASKAT = pvalue.davies, Q.ASKAT = Q, Polygenic.VC = estim.sigma.RG, Env.VC = estim.sigma.e, lambda = lambda, is_converge = is_converge) );
 }
 
 #-------------------------------------------------------------------------------
@@ -147,13 +147,13 @@ Get_Lambda <- function (K) {
 # Get p-value
 # Note: This function was taken from SKAT package, modified as needed.  
 #-------------------------------------------------------------------------------
-Get_PValue.Modif <- function(K, Q){
+Get_PValue.Modif <- function(K, Q, pACC){
 	lambda <- Get_Lambda(K)
 	p.val<-0
 	p.val.liu<-0
 	is_converge <- 0
 	 
-  out <- davies(Q, lambda, acc = 10^(-9))
+  out <- davies(Q, lambda, acc = pACC)
   p.val <- out$Qq
   p.val.liu <- liu(Q, lambda)
   is_converge <- 1
@@ -167,7 +167,7 @@ Get_PValue.Modif <- function(K, Q){
   if (p.val > 1 || p.val < 0) {
     is_converge <- 0
   }
-  cat("is converge:"); cat(is_converge)
+  #cat("is converge:"); cat(is_converge)
   return(list(p.value = p.val, p.val.liu = p.val.liu, is_converge = is_converge, lambda = lambda))
 }
 
@@ -210,7 +210,8 @@ dataFileStr     <- cmdLineArgs[1];
 tfamFile        <- cmdLineArgs[2];
 kinshipFile     <- cmdLineArgs[3];
 subBlockSize    <- as.integer( cmdLineArgs[4] );
-onlyOnce        <- (cmdLineArgs[5] == 'TRUE') || (cmdLineArgs[5] == 'T')
+pACC            <- as.double (cmdLineArgs[5]) #UPD new command line argument for the p-value accuracy
+onlyOnce        <- (cmdLineArgs[6] == 'TRUE') || (cmdLineArgs[6] == 'T')
 debug           <- debug || onlyOnce;		# Set debug mode
 
 cat("ASKAT arguments:\n");
@@ -218,6 +219,7 @@ cat("\tData file/s         : ", dataFileStr , "\n" );
 cat("\tTFAM file           : ", tfamFile , "\n" );
 cat("\tKinship matrix file : ", kinshipFile , "\n" );
 cat("\tSub-block size      : ", subBlockSize , "\n" );
+cat("\tp-value accuracy    : ", pACC  , "\n" );
 cat("\tTemporal dir        : ", tmpDir , "\n" );
 
 #---
@@ -256,7 +258,7 @@ for( dataFile in dataFiles ) {
 	#---
 	snpIdx <- 5:dim(dat)[2];							# Columns having SNP data
 	ped12 <- tfam[,c(2,6)]; 							# First two columns of data structure (inividualID and phenotype)
-	sbIdx <- seq( 1, dim(dat)[1] , by = subBlockSize );	# SubBlock indeces
+	sbIdx <- seq( 1, dim(dat)[1] , by = subBlockSize );	# SubBlock indices
 
 	# Iterate on every sub-block
 	for( i in sbIdx )  {
@@ -268,10 +270,13 @@ for( dataFile in dataFiles ) {
 		if( debug )	{ cat('Iterating on sub-block: ', paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="") , '\n' ); }
 
 		# Call ASKAT
-		results <- ASKAT(ped, fastlmm)
-
-		# Show results
-		cat("\nASKAT_RESUTS:"
+		results <- ASKAT(ped, fastlmm, pACC)
+    
+		if (results$is_converge == 0) {Warning<-"\nWARNING: p-value calculation did not converge for this block, try to set pACC to a different value, default is 1e-9"}
+    else{Warning<-""}
+    
+    # Show results
+		cat("\nASKAT_RESULTS:"
 			, "p-value:" , results$pvalue.ASKAT 
 			, "chr:pos:", paste( dat[i,1], ':', dat[i,4], ' - ' , dat[maxBlock,1], ':', dat[maxBlock,4], sep="")
 			, "Block:", dataFile
@@ -281,10 +286,12 @@ for( dataFile in dataFiles ) {
 			, "Polygenic.VC:", results$Polygenic.VC
 			, "Env.VC:", results$Env.VC
 			, "lambda:", results$lambda
-			, "\n"
+      , "is converge:", results$is_converge
+      , "\n"
 			, sep="\t" 
 			);
-
+    cat(Warning)
+		
 		if( onlyOnce )	{ 
 			# Excecute only one sub-block? => Stop now
 			fatalError('Execute onlyOnce is set. Stopping after first iteration.\n'); 

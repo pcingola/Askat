@@ -88,8 +88,9 @@ public class Askat implements CommandLine {
 	// R Libraries
 	public static final String DEPENDECY_RLIBS[] = { "GenABEL", "CompQuadForm", "nFactors", "MASS" };
 
-	// Askat results identifier (askat.r)
-	public static final String ASKAT_RESULTS = "ASKAT_RESUTS:";
+	// Askat results identifiers (askat.r)
+	public static final String ASKAT_RESULTS = "ASKAT_RESULTS:";
+	public static final String ASKAT_WARNING = "WARNING:";
 
 	protected int numWorkers = Gpr.NUM_CORES; // Max number of threads (if multi-threaded version is available)
 	boolean debug = false; // Debug mode
@@ -111,6 +112,7 @@ public class Askat implements CommandLine {
 	protected HashMap<String, String> pathToBin;
 	protected KinshipMethod kinshipMethod = KinshipMethod.CHROMOSOME;
 	protected double maxMaf = 1.0; // Maximum 'MAF' allowed for the analysis (filter out other SNPs).
+	protected double pACC = 1e-9; // accuracy parameter for the r-method 'davies' computing p-value
 	protected List<SeqChange> intervals;
 
 	public static void main(String[] args) {
@@ -356,6 +358,10 @@ public class Askat implements CommandLine {
 	public boolean isVerbose() {
 		return verbose;
 	}
+	
+	public double getpACC() {
+		return pACC;
+	}
 
 	/**
 	 * Show missing dependency error and exit
@@ -449,6 +455,11 @@ public class Askat implements CommandLine {
 					} else usage("Missing kinship type.");
 				} else if (args[i].equalsIgnoreCase("-onlySnp")) {
 					onlySnp = true;
+				} else if (args[i].equalsIgnoreCase("-pACC")) { // UPD: add p-value accuracy option to improve with R-function "davies" numerical precision
+					if ((i + 1) < args.length) {
+						pACC = Gpr.parseDoubleSafe(args[++i]);
+						if (pACC <= 0) usage("Accuracy must be a positive number.");
+					} else usage("Missing accuracy value.");
 				} else usage("Unknow option '" + args[i] + "'");
 			} else if (genotypeName.isEmpty()) genotypeName = args[i];
 			else usage("Unknow parameter '" + args[i] + "'");
@@ -691,6 +702,7 @@ public class Askat implements CommandLine {
 		System.err.println("\t-sb <num>      : Number of SNPs used for calculating the ASKAT algorithm. Default: " + subBlockSize);
 		System.err.println("\t-useMissing    : Use entries with missing genotypes (otherwise they are filtered out). ");
 		System.err.println("\t-useMissingRef : Use entries with missing genotypes marking them as 'reference' instead of 'missing'. ");
+		System.err.println("\t-pACC <double> : Accuracy parameter for the p-value computation, default is 1e-9.");
 		System.err.println("\t-v             : Be verbose.");
 		System.exit(-1);
 	}
