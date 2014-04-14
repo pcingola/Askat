@@ -474,7 +474,7 @@ public class Askat implements CommandLine {
 	public boolean run() {
 		// Salutation message
 		if (verbose) {
-			Timer.showStdErr("ASKAT algorithm by Karim Oualkacha");
+			Timer.showStdErr("ASKAT algorithm by Karim Oualkacha, optimized from N^3 to N^2 complexity by Stepan Grinek");
 /*			Timer.showStdErr(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n"); */
 		}
 
