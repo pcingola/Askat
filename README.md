@@ -53,7 +53,8 @@ Options:
 	-pathBin &lt;dir&gt; : Path to binary programs (e.g. FastLmm). Default: './'.
 	-pathR &lt;dir&gt;   : Path to R scripts (ASKAT scripts). Default './r/'.
 	-sb &lt;num&gt;      : Number of SNPs used for calculating the ASKAT algorithm. Default: 20
-	-v             : Be verbose.
+	-pACC &lt;double&gt; : Accuracy parameter for the p-value computation, default is 1e-9.
+  -v             : Be verbose.
 </pre>
 
 <b>Some comments about the 'intervals' option</b><p>
