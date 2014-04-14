@@ -683,7 +683,7 @@ public class Askat implements CommandLine {
 	@Override
 	public void usage(String message) {
 		if (message != null) System.err.println("Error: " + message + "\n");
-		System.err.println("ASKAT algorithm by Karim Oualkacha");
+		System.err.println("ASKAT algorithm by Karim Oualkacha, optimized from N^3 to N^2 complexity by Stepan Grinek");
 		/* System.err.println(this.getClass().getSimpleName() + " wrapper version " + VERSION + "\n"); */
 		System.err.println("Usage: java -jar " + this.getClass().getSimpleName() + ".jar [options] genotype");
 		System.err.println("Options:");

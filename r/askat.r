@@ -129,7 +129,8 @@ ASKAT <- function(ped, fastlmm, pACC=1e-9) {
 }
 
 #-------------------------------------------------------------------------------
-# Get lambda
+# Get lambda UPD: heuristics: "IDX2 <- which(lambda1 > mean(lambda1[IDX1])/1e+05)"
+# is removed to address accuracy issues
 #-------------------------------------------------------------------------------
 Get_Lambda <- function (K) {
 	out.s <- eigen(K, symmetric = TRUE, only.values = TRUE)
@@ -145,7 +146,7 @@ Get_Lambda <- function (K) {
 
 #-------------------------------------------------------------------------------
 # Get p-value
-# Note: This function was taken from SKAT package, modified as needed.  
+# Note: This function was taken from SKAT package, modified as needed
 #-------------------------------------------------------------------------------
 Get_PValue.Modif <- function(K, Q, pACC){
 	lambda <- Get_Lambda(K)
