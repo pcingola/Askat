@@ -36,7 +36,8 @@ E.g.: To show a help message, just run the program without any parameters:
 
 <pre>
 $ java -jar Askat.jar
-ASKAT algorithm by Karim Oualkacha
+ASKAT algorithm by Karim Oualkacha. 
+Optimized from N^3^ to N^2^ complexity by Stepan Grinek
 Askat wrapper version 1.01 (build 2012-11-21), by Pablo Cingolani
 
 Usage: java -jar Askat.jar [options] genotype
