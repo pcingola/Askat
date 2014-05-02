@@ -2,7 +2,7 @@ Askat
 =====
 
 You can <b>download</b> the program <a href="http://sourceforge.net/projects/snpeff/files/askat.zip"> <b><font size=+1>here</font></b> </a><p> <b>Or</b> you can get the whole project and a zip file using this command: git clone https://github.com/pcingola/Askat.git (requires git installed).
-You can take a look at some <a href="html/AskatWrapper.pdf">slides</a> on the wrapper.
+<p>You can take a look at some <a href="html/AskatWrapper.pdf">slides</a> on the wrapper.</p>
 
 <hr><center><h3>Basics</h3></center>
 
