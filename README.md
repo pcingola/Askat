@@ -1,15 +1,15 @@
 Askat 
 =====
 
-You can <b>download</b> the program <a href="http://sourceforge.net/projects/snpeff/files/askat.zip"> <b><font size=+1>here</font></b> </a><p>
-You can taker a look at some <a href="html/AskatWrapper.pdf">slides</a> on the wrapper.
+You can <b>download</b> the program <a href="http://sourceforge.net/projects/snpeff/files/askat.zip"> <b><font size=+1>here</font></b> </a><p> or you can get the whole project and a zip file using this command: git clone https://github.com/pcingola/Askat.git (requires git installed).
+You can take a look at some <a href="html/AskatWrapper.pdf">slides</a> on the wrapper.
 
 <hr><center><h3>Basics</h3></center>
 
 <b>Requirements</b><p>
 
 <ul>
-	<li> R : Make sure you have a resonably up to date version of R installed and availabe in you PATH.
+  <li> R : Make sure you have a resonably up to date version of R installed and availabe in you PATH.
 	<li> Java 1.6 : Most modern computers have Java installed.
 	<li> Fast-LMM : Pre-compiled versions of fast-Lmm can be found <a href="http://fastlmm.codeplex.com/"> here </a> (Linux and Windows).<br>
 			<b>WARNING:</b> You should use relatively new version of Fast-LMM (e.g. version v1.09).
@@ -59,7 +59,7 @@ Options:
 
 <b>Some comments about the 'intervals' option</b><p>
 
-Whenever command line option '-i file.bed' is specified, Askat wrapper analysis all variants matching those intervals as a single block.
+Whenever command line option '-i file.bed' is specified, Askat wrapper analyses all variants matching those intervals as a single block.
 This means that variants are not subdivided into sub-blocks. 
 This is effectively like setting the subBlock parameter ('-sb') to infinity.<br>
 
